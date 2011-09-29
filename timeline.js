@@ -73,13 +73,11 @@ $(function() {
 				items[i] = last
 				last = tmp
 			}
-			console.log(before)
-			console.log(items)
 		}
 		new_id = set_item(row+1,id2,"[new]")
 		items[row][id2][2].push(new_id)
 
-		//row++
+		row++
 		update_controls()
 		redraw()
 		return false
@@ -97,9 +95,6 @@ $(function() {
 		}
 		new_id = set_item(row+1, col,"[new]")
 		items[row][id2][2].push(new_id)
-		row++
-		id2 = col
-		update_controls()
 		redraw()
 		return false
 	})
@@ -126,6 +121,42 @@ $(function() {
 	$("#delete").click(function() {
 		items[row][id2][1] = ""
 		items[row][id2][2] = []
+		redraw()
+		return false
+	})
+
+	$("#move_right").click(function() {
+		col = id2+1
+		while(items[row][col] && items[row][col][1].length > 0) {
+			col++
+		}
+		if(items[row][col]) {
+			cur_id = items[row][col][0]
+		} else {
+			cur_id = next_id++
+		}
+		items[row][col] = items[row][id2]
+		items[row][id2]= [cur_id, "", []]
+		id2=col
+		redraw()
+		return false
+	})
+
+	$("#move_left").click(function() {
+		col = id2-1
+		while(col >= 0 && items[row][col] && items[row][col][1].length > 0 ) {
+			col--
+		}
+		if(col < 0)
+			return false
+		if(items[row][col]) {
+			cur_id = items[row][col][0]
+		} else {
+			cur_id = next_id++
+		}
+		items[row][col] = items[row][id2]
+		items[row][id2]= [cur_id, "", []]
+		id2=col
 		redraw()
 		return false
 	})

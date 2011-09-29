@@ -9,7 +9,7 @@
 			$stmt = "INSERT INTO timelines (id,timeline, key, next_id) VALUES (NULL,'".$_POST['src']."','".$key."', '".$_POST['next_id']."')";
 			$q = $db->query($stmt);
 			if(!$q) die($error);
-			header("Location: index.php?id=".$db->lastInsertRowid()."&key=".$key);
+			header("Location: ?id=".$db->lastInsertRowid()."&key=".$key);
 		}
 	}
 
@@ -50,7 +50,7 @@
 
 	#instructions {
 		font-size: 10pt;
-		width: 400px;
+		width: 600px;
 	}
 </style>
 <script type="text/javascript">
@@ -83,10 +83,13 @@ var next_id = <?=$next_id?>
 	Links is where to draw the arrows from this node (specify ids)<br/>
 </p>
 <p>
-<strong>Buttons:</strong><br/>
-Add branch: Adds a child on the level below, at the rightmost available position (this creates a branch if the current node already has a child)<br/>
-Insert child: Inserts a child below this node. If the position below is empty the child is placed there, otherwise an empty level is created to make room for the child.<br/>
-Save: Saves the timeline, use url to load
+<strong>Buttons:</strong>
+</p>
+<p>
+<strong>Add branch:</strong> Adds a child on the level below, at the rightmost available position (this creates a branch if the current node already has a child). Next focus: Same</p><p>
+<strong>Insert child:</strong> Inserts a child below this node. If the position below is empty the child is placed there, otherwise an empty level is created to make room for the child. Next focus: Create child</p><p>
+<strong>Save:</strong> Saves the timeline, use url to load</p>
+<strong>&lt;-/-&gt;:</strong> Move node left or right
 </p>
 <p style="font-size: 8pt">
 Written by <a href="https://github.com/torandi">Andreas Tarandi</a><br/>
@@ -112,6 +115,10 @@ Powered by <a href="http://www.headjump.de/article/arrows-and-boxes">Arrows and 
 	<p>
 		<label for="content">Links: </label>
 		<input type="text" id="links"/>
+	</p>
+	<p>
+		<input type="submit" id="move_left" value="<-"/>
+		<input type="submit" id="move_right" value="->"/>
 	</p>
 	<p>
 		<input type="submit" id="add_branch" value="Add branch"/>
