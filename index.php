@@ -121,8 +121,8 @@ Powered by <a href="http://www.headjump.de/article/arrows-and-boxes">Arrows and 
 		<input type="submit" id="move_right" value="->"/>
 	</p>
 	<p>
-		<input type="submit" id="add_branch" value="Add branch"/>
 		<input type="submit" id="add_child" value="Insert child"/>
+		<input type="submit" id="add_branch" value="Add branch"/>
 		<input type="submit" id="delete" value="Delete"/>
 	</p>
 	<p>
