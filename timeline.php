@@ -89,8 +89,8 @@ Instruktioner
 		<input type="text" id="links"/>
 	</p>
 	<p>
-		<input type="submit" id="add_branch" value="Add branch"/>
-		<input type="submit" id="add_child" value="Add child"/>
+		<input type="submit" id="add_branch" value="Add children"/>
+		<input type="submit" id="add_child" value="Insert children"/>
 		<input type="submit" id="delete" value="Delete"/>
 	</p>
 	<p>
