@@ -120,7 +120,14 @@ $(function() {
 
 	$("#show_id").change(function() {
 		show_id = $("#show_id").attr("checked")
-		redraw();
+		redraw()
+	})
+
+	$("#delete").click(function() {
+		items[row][id2][1] = ""
+		items[row][id2][2] = []
+		redraw()
+		return false
 	})
 
 	update_controls()
