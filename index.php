@@ -9,7 +9,7 @@
 			$stmt = "INSERT INTO timelines (id,timeline, key, next_id) VALUES (NULL,'".$_POST['src']."','".$key."', '".$_POST['next_id']."')";
 			$q = $db->query($stmt);
 			if(!$q) die($error);
-			header("Location: timeline.php?id=".$db->lastInsertRowid()."&key=".$key);
+			header("Location: index.php?id=".$db->lastInsertRowid()."&key=".$key);
 		}
 	}
 
