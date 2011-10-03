@@ -19,5 +19,5 @@
 	 * 0: (id INTEGER PRIMARY KEY, timeline string, key string, next_id int)
 	 * 1: (id INTEGER PRIMARY KEY, timeline string, key string, next_id int, version INT default 0)
 	 */
-	echo "Db updated";
+	echo "Db updated\n";
 ?>
