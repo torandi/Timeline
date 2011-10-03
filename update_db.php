@@ -3,11 +3,17 @@
 
 	$version = file_get_contents("timeline.db.version");
 	if($version!==false) {
-		switch($version) {
+		switch(trim($version)) {
 			case "0":
+				echo "Update from version 0\n";
 				$q = $db->query("ALTER TABLE timelines ADD COLUMN version INTEGER DEFAULT(0)");
 				if(!$q) die($q->lastErrorMsg());
 				break;
+			case "1":
+				echo "Up to date\n";
+				break;
+			default:
+				die("Unknown version in file\n");
 		}
 	} else {
 		$q = $db->query("CREATE TABLE IF NOT EXISTS timelines (id INTEGER PRIMARY KEY, timeline string, key string, next_id int, version int DEFAULT(0))");
