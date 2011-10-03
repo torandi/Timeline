@@ -1,3 +1,5 @@
 A tool for creating timelines containing splits (or just graphs)
 
 The backend is not safe for injections!
+
+To update/create the database, run php update_db.php, remember to run it as www-data the first time or chmod timeline.sqlite so that www-data may write and read it.
