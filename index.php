@@ -1,15 +1,23 @@
 <?
-	$db = new SQLite3('timeline.sqlite');
-	$q = $db->query("CREATE TABLE IF NOT EXISTS timelines (id INTEGER PRIMARY KEY, timeline string, key string, next_id int)");
+	require_once('db.php');
 	if(isset($_POST['src'])) {
 		if(isset($_GET['key'])) {
-			$db->query("UPDATE timelines SET timeline='".$_POST['src']."', next_id='".$_POST['next_id']."' WHERE key='".$_GET['key']."' AND id='".$_GET['id']."';");
+			$key = $_GET['key'];
+			
+			$version = $db->querySingle("SELECT version FROM timelines WHERE key='".$key."' ORDER BY version DESC LIMIT 1");
+			$stmt = "INSERT INTO timelines (id,timeline, key, next_id,version) VALUES (NULL,'".$_POST['src']."','".$key."', '".$_POST['next_id']."', '".($version+1)."')";
+			$q = $db->query($stmt);
+			if(!$q) die($q->lastErrorMsg());
 		} else {
-			$key = random_string();
+			$exists = true;
+			while($exists) {
+				$key = random_string(16);
+				$exists = $db->querySingle("SELECT 1 FROM timelines WHERE key='".$key."' LIMIT 1");
+			}
 			$stmt = "INSERT INTO timelines (id,timeline, key, next_id) VALUES (NULL,'".$_POST['src']."','".$key."', '".$_POST['next_id']."')";
 			$q = $db->query($stmt);
-			if(!$q) die($error);
-			header("Location: ?id=".$db->lastInsertRowid()."&key=".$key);
+			if(!$q) die($q->lastErrorMsg());
+			header("Location: ?key=".$key);
 		}
 	}
 
@@ -55,13 +63,21 @@
 </style>
 <script type="text/javascript">
 var items = <?	
-	if(isset($_GET['id'])) {
-		$result = $db->querySingle("SELECT * FROM timelines WHERE id='".$_GET['id']."' AND key='".$_GET['key']."'", true);
+	if(isset($_GET['version'])) {
+		$version_str = " AND version = '".$_GET['version']."'";
+	} else {
+		$version_str = "";
+	}
+
+	if(isset($_GET['key']) && ($result = $db->querySingle("SELECT * FROM timelines WHERE key='".$_GET['key']."'$version_str ORDER BY version DESC LIMIT 1", true))) {
+		
 		echo $result['timeline'];
 		$next_id = $result['next_id'];
+		$version = $result['version'];
 	} else {
 		echo "[ [ [0, '[new]', [] ] ] ]";
 		$next_id = 1;
+		$version = "Not saved";
 	}
 ?>
 
@@ -100,6 +116,9 @@ Powered by <a href="http://www.headjump.de/article/arrows-and-boxes">Arrows and 
 <hr/>
 <div id="controls">
 <form method="post" action="">
+	<p>
+	<strong>Current version:</strong> <?=$version?>
+	</p>
 	<p>
 		<input type="checkbox" id="show_id"/>
 		<label for="show_id">Show ID</label>
