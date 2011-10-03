@@ -16,7 +16,7 @@ function redraw() {
 				text=""
 			}
 
-			if(item[4] != undefined && item[4].length > 0) {
+			if(item[4] != undefined && item[4].length != "none") {
 				node_class = "{"+item[4]+"}"
 			} else {
 				node_class = ""
@@ -58,6 +58,9 @@ function update_controls() {
 	$("#links").val(item[2].join(","))
 	$("#description").val(item[3])
 	$("#node_class option[selected=\"selected\"]").attr("selected",false)
+	if(item[4]== undefined || item[4].length == 0) {
+		item[4] = "none";
+	}
 	$("#node_class option[value=\""+item[4]+"\"]").attr("selected",true)
 }
 

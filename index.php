@@ -1,6 +1,6 @@
 <?
 	$node_class = array(
-		"Default" => "",
+		"Default" => "none",
 		"Green" => "green",
 		"Yellow" => "yellow",
 		"Red" => "red"
@@ -76,7 +76,7 @@ var items = <?
 var next_id = <?=$next_id?>
 
 </script>
-<script type="text/javascript" src="timeline.js?v=1">
+<script type="text/javascript" src="timeline.js?v=2">
 </script>
 </head>
 <body>
