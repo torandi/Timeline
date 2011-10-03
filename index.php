@@ -8,6 +8,8 @@
 			$stmt = "INSERT INTO timelines (id,timeline, key, next_id,version) VALUES (NULL,'".$_POST['src']."','".$key."', '".$_POST['next_id']."', '".($version+1)."')";
 			$q = $db->query($stmt);
 			if(!$q) die($q->lastErrorMsg());
+			if(isset($_GET['version']))
+				header("Location: ?key=".$key);
 		} else {
 			$exists = true;
 			while($exists) {
