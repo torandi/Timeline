@@ -4,8 +4,8 @@ var show_id=false
 
 function redraw() {
 	str = ""
-	$.each(items, function(i, row) {
-		$.each(row, function(i2, item) {
+	$.each(items, function(i, r) {
+		$.each(r, function(i2, item) {
 			if(item[2].length > 0) {
 				links = " > ["+item[2].join(",")+"]"
 			} else {
@@ -15,7 +15,11 @@ function redraw() {
 			if(item[1]=="") {
 				text=""
 			}
-			str+="("+item[0]+":"+text+links+") "
+			item_content = "("+item[0]+":"+text+links+") "
+			if(i == row && i2 == id2) {
+				item_content = "("+item_content+")" //Add hilight
+			}
+			str+=item_content
 		})
 		str+=" || "
 	})
@@ -51,8 +55,10 @@ $(function() {
 	redraw()
 
 	$(".arrowsandboxes-node").live('click',function() {
+		$(".arrowsandboxes-node.arrowsandboxes-node-highlighted").removeClass("arrowsandboxes-node-highlighted")
 		row = $(this).find("span").data("row")
 		id2 = $(this).find("span").data("id2")
+		$(this).addClass("arrowsandboxes-node-highlighted")
 		update_controls()
 	})
 
