@@ -1,0 +1,25 @@
+#controls {
+	font-size: 10pt;
+	background: white;
+	border: 1px solid black;
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	z-index: 10;
+	padding: 5px;
+}
+
+#instructions {
+	font-size: 10pt;
+	width: 600px;
+}
+
+.green, .green * {
+	background-color: #b2ffaa !important;
+}
+.red, .red *{
+	background-color: #ffa0a0 !important;
+}
+.yellow, .yellow *{
+	background-color: #fbff85 !important;
+}

@@ -15,7 +15,14 @@ function redraw() {
 			if(item[1]=="") {
 				text=""
 			}
-			item_content = "("+item[0]+":"+text+links+") "
+
+			if(item[4] != undefined && item[4].length > 0) {
+				node_class = "{"+item[4]+"}"
+			} else {
+				node_class = ""
+			}
+
+			item_content = "("+item[0]+node_class+":"+text+links+") "
 			if(i == row && i2 == id2) {
 				item_content = "("+item_content+")" //Add hilight
 			}
@@ -49,6 +56,9 @@ function update_controls() {
 	$("#content").val(item[1])
 	$("#id").html(item[0])
 	$("#links").val(item[2].join(","))
+	$("#description").val(item[3])
+	$("#node_class option[selected=\"selected\"]").attr("selected",false)
+	$("#node_class option[value=\""+item[4]+"\"]").attr("selected",true)
 }
 
 $(function() {
@@ -110,6 +120,10 @@ $(function() {
 		redraw()
 	})
 
+	$("#description").change(function() {
+		items[row][id2][3] = $("#description").val()
+	})
+
 	$("#links").change(function() {
 		try {
 			items[row][id2][2] = eval("["+$("#links").val()+"]")
@@ -121,6 +135,11 @@ $(function() {
 
 	$("#show_id").change(function() {
 		show_id = $("#show_id").attr("checked")
+		redraw()
+	})
+
+	$("#node_class").change(function() {
+		items[row][id2][4] = $("#node_class").val()
 		redraw()
 	})
 

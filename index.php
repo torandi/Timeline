@@ -1,4 +1,11 @@
 <?
+	$node_class = array(
+		"Default" => "",
+		"Green" => "green",
+		"Yellow" => "yellow",
+		"Red" => "red"
+	);
+
 	require_once('db.php');
 	if(isset($_POST['src'])) {
 		if(isset($_GET['key'])) {
@@ -45,24 +52,7 @@
 <script src="jquery_wz_jsgraphics.js" type="text/javascript"></script>
 <script src="arrowsandboxes.js" type="text/javascript"></script>
 
-<style>
-
-	#controls {
-		font-size: 10pt;
-		background: white;
-		border: 1px solid black;
-		position: fixed;
-		top: 10px;
-		right: 10px;
-		z-index: 10;
-		padding: 5px;
-	}
-
-	#instructions {
-		font-size: 10pt;
-		width: 600px;
-	}
-</style>
+<link href="timeline.css?v=0" rel="stylesheet" type="text/css"/>
 <script type="text/javascript">
 var items = <?	
 	if(isset($_GET['version'])) {
@@ -77,7 +67,7 @@ var items = <?
 		$next_id = $result['next_id'];
 		$version = $result['version'];
 	} else {
-		echo "[ [ [0, '[new]', [] ] ] ]";
+		echo "[ [ [0, '[new]', [], '', '' ] ] ]";
 		$next_id = 1;
 		$version = "Not saved";
 	}
@@ -86,7 +76,7 @@ var items = <?
 var next_id = <?=$next_id?>
 
 </script>
-<script type="text/javascript" src="timeline.js">
+<script type="text/javascript" src="timeline.js?v=1">
 </script>
 </head>
 <body>
@@ -134,8 +124,22 @@ Powered by <a href="http://www.headjump.de/article/arrows-and-boxes">Arrows and 
 		<input type="text" id="content"/>
 	</p>
 	<p>
+		<label for="description">Description:</label><br/>
+		<textarea id="description" cols="33" rows="4" style="margin-left: 5px"></textarea>
+	</p>
+	<p>
 		<label for="content">Links: </label>
 		<input type="text" id="links"/>
+	</p>
+	<p>
+		<label for="node_class">Background: </label>
+		<select id="node_class">
+			<?
+				foreach($node_class as $desc => $nc) {
+					?><option value="<?=$nc?>"><?=$desc?></option><?
+				}
+			?>
+		</select>
 	</p>
 	<p>
 		<input type="submit" id="move_left" value="<-"/>
