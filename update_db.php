@@ -1,4 +1,4 @@
-<?
+<?php
 	require_once('db.php');
 
 	$version = file_get_contents("timeline.db.version");
